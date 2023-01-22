@@ -1,94 +1,99 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text;
 using System.Threading.Channels;
+using System.Xml.Linq;
 
 class Employees
 {
     public static void Main(string[] args)
     {
-        string pathEmp = @"E:\SkillBox\FilesforTasks\Task_6.1\Employees.txt";
+        Employees employees = new Employees();
+        string pathEmp = "Employees.txt";
         Console.WriteLine("Показать сотрудников - нажмите 1 \nВвести нового сотрудника - нажмите 2");
-        ChoiceInput();
-        int IDEmp;
-        DateTime dateInput;
-        string nameEmp;
-        string patronymicEmp;
-        string lastnameEmp;
-        int ageEmp;
-        double heightEmp;
-        DateOnly birthday;
-        string birthplaceEmp;
+        employees.ChoiceInput(int.Parse(Console.ReadLine()),pathEmp);
+        //employees.Writer(pathEmp);
+        //employees.Reader(pathEmp);
         Console.ReadLine();
-        void Writer()
+    }
+    /// <summary>
+    /// Запись сотрудника
+    /// </summary>
+    void Writer(string strPath)
+    {
+        char numContinue;
+        if (File.Exists(strPath) == false)
         {
-            if (File.Exists(pathEmp) == false)
+            File.Create(strPath).Close();
+            Writer(strPath);
+        }
+        else
+        {
+            do
             {
-                File.Create(pathEmp).Close();
-                Writer();
-                
-            }
-            else
-            {
-                IDEmp = File.ReadAllLines(pathEmp).Count();
-                using (StreamWriter strWriter = new StreamWriter(pathEmp, false))
+                int IDEmp = File.ReadAllLines(strPath).Count();
+                using (StreamWriter strWriter = new StreamWriter(strPath, true))
                 {
                     IDEmp += 1;
-                    dateInput = DateTime.Now;
+                    DateTime dateInput = DateTime.Now;
                     //string nameEmp = string.Empty;
-                    Console.WriteLine("Фамилия");
-                    lastnameEmp = Console.ReadLine();
+                    Console.WriteLine("\nФамилия");
+                    string lastname = Console.ReadLine();
                     Console.WriteLine("Имя сотрудника");
-                    nameEmp = Console.ReadLine();
+                    string patronymic = Console.ReadLine();
                     Console.WriteLine("Отчество");
-                    patronymicEmp = Console.ReadLine();
+                    string name = Console.ReadLine();
                     Console.WriteLine("Возраст");
-                    ageEmp = int.Parse(Console.ReadLine());
+                    int age = int.Parse(Console.ReadLine());
                     Console.WriteLine("Рост");
-                    heightEmp = double.Parse(Console.ReadLine());
+                    double height = double.Parse(Console.ReadLine());
                     Console.WriteLine("Дата рождения");
-                    birthday = DateOnly.Parse(Console.ReadLine());
+                    DateOnly birthday = DateOnly.Parse(Console.ReadLine());
                     Console.WriteLine("Место рождения");
-                    birthplaceEmp = Console.ReadLine();
-                    strWriter.WriteLine($"{IDEmp}#{dateInput}#{lastnameEmp} {nameEmp} {patronymicEmp}#{ageEmp}#{heightEmp}#{birthday}#{birthplaceEmp}");
+                    string birthplace = Console.ReadLine();
+                    strWriter.WriteLine($"{IDEmp}#{dateInput}#{lastname} {patronymic} {name}#{age}#{height}#{birthday}#{birthplace}");
                     //strWriter.WriteLine(nameEmp);
                 }
                 Console.WriteLine("Продолжить заполнять? Нажмите 2 \nЗавершить заполнение - нажмите 3");
-                ChoiceInput();
-            }
+                numContinue = Console.ReadKey().KeyChar;
+
+            } while (numContinue == '2');
         }
-        static void Reader(string pathEmp)
+    }
+    void Reader(string strPath)
+    {
+        if (File.Exists(strPath) == false)
         {
-            if (File.Exists(pathEmp) == false)
+            Console.WriteLine("Файл не существует");
+        }
+        else
+        {
+            using (StreamReader strReader = new StreamReader(strPath, false))
             {
-                Console.WriteLine("Файл не существует");
-            }
-            else
-            {
-                using (StreamReader strReader = new StreamReader(pathEmp))
+                string line;
+                while ((line = strReader.ReadLine()) != null)
                 {
-                    string line;
-                    while ((line = strReader.ReadLine()) != null)
-                    {
-                        Console.WriteLine(line.Replace('#', ' '));
-                    }
+                    Console.WriteLine(line.Replace('#', ' '));
                 }
             }
         }
-        void ChoiceInput()
+    }
+    void ChoiceInput(int chooseNum, string strPath)
+    {
+        //int num = int.Parse(Console.ReadLine());
+        switch (chooseNum)
         {
-            int choiceInput = int.Parse(Console.ReadLine());
-            switch (choiceInput)
-            {
-                default:
-                    Console.WriteLine("Введите то, что вас просят!!!");
-                    break;
-                case 1: Reader(pathEmp);
-                    break;
-                case 2: Writer();
-                    break;
-                case 3: Console.WriteLine("До свидания!");
-                    break;
-            }
+            default:
+                Console.WriteLine("Введите то, что вас просят!!!");
+                break;
+            case 1:
+                Reader(strPath);
+                break;
+            case 2:
+                Writer(strPath);
+                break;
+            case 3:
+                Console.WriteLine("До свидания!");
+                break;
         }
     }
 }
