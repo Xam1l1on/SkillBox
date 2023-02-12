@@ -10,7 +10,7 @@ namespace Task_7._1
             string pathToFile = "Emploees.txt";
             Repository repository = new Repository(pathToFile);
             Console.WriteLine("Нажмите 1 чтобы увидеть всех пользователей\nНажмите 2 чтобы добавить сотрудника\nнажмите 3 чтобы удалить пользователя" +
-                "\nНажмите 4 чтобы найти пользователя по номеру");
+                "\nНажмите 4 чтобы найти пользователя по номеру\nНажмите 5, чтобы найти пользователей по дате создания");
             switch (int.Parse(Console.ReadLine()))
             {
                 default:
@@ -34,10 +34,11 @@ namespace Task_7._1
                         Console.WriteLine("Место рождения");
                         string birhplaceEmp = Console.ReadLine();
                         repository.AddWorker(new Worker(repository.Count, DateTime.Now, fioEmp, ageEmp, heigthEmp, birhtdayEmp, birhplaceEmp));
-                        Console.WriteLine("Продолжить заполнять? Нажмите 'д'\n");
+                        Console.Write($"Продолжить заполнять? Нажмите 'д'\n");
                         keyContinue = Console.ReadKey().KeyChar;
+                        repository.SaveEmp();
                     } while (keyContinue == 'д');
-                    repository.SaveEmp();
+
                     break;
                  case 3:
                     Console.WriteLine("Введите номер сотрудника");
@@ -47,7 +48,14 @@ namespace Task_7._1
                 case 4:
                     Console.WriteLine("Введите номер сотрудника");
                     int IDEmp2 = int.Parse(Console.ReadLine());
-                    Console.WriteLine($"{repository.GetWorkerById(IDEmp2).ID} {repository.GetWorkerById(IDEmp2).FIO}");
+                    repository.GetWorkerById(IDEmp2);
+                    Console.ReadLine();
+                    break;
+                case 5:
+                    Console.WriteLine($"Введите две даты от: и до:");
+                    DateTime datefrom = DateTime.Parse(Console.ReadLine());
+                    DateTime dateto = DateTime.Parse(Console.ReadLine());
+                    repository.GetWorkersBetweenTwoDates(datefrom, dateto);
                     Console.ReadLine();
                     break;
             }

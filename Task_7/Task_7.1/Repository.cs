@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ namespace Task_7._1
             this.pathEmp = PathEmp;
             this.index = 0;
             this.workers = new Worker[1];
-            this.CheckFile();
-            this.LoadEmp();
+            CheckFile();
+            GetAllWorkers();
         }
         /*public void EmpMenu(string strPath, int ID)
         {
@@ -43,23 +44,25 @@ namespace Task_7._1
             {
                 while (!strReader.EndOfStream)
                 {
-                    this.Resize(index >= this.workers.Length);
                     string[] line = strReader.ReadLine().Split('#');
-                    workers[index] = new Worker(int.Parse(line[0]), Convert.ToDateTime(line[1]), line[2], int.Parse(line[3]), 
-                        double.Parse(line[4]), DateOnly.Parse(line[5]), line[6]);
+                    AddWorker(new Worker(int.Parse(line[0]), DateTime.Parse(line[1]), line[2], int.Parse(line[3]), double.Parse(line[4]),
+                        DateOnly.Parse(line[5]), line[6]));
                 }
             }
         return workers;
         }
         public Worker GetWorkerById(int id)
         {
-            int i = 0;
-            while (workers[i].ID == id)
+            int i;
+            for(i = 0; i <= id;i++)
             {
-                i++;
-                id = i;
+                if(workers[i].ID == id)
+                {
+                    Console.WriteLine(this.workers[i].PrintEmp());
+                }
+                
             }
-            return workers[id];
+            return workers[i];
         }
         public void DeleteWorker(int id)
         {
@@ -84,19 +87,37 @@ namespace Task_7._1
         {
                 Resize(index >= this.workers.Length);
                 workers[index] = worker;
-                //strWriter.WriteLine($"{worker.ID}#{worker.dateCreate}#{worker.FIO}#{worker.Age}#{worker.Height}#{worker.Birthday}#{worker.Birthplace}");
                 index++;
         }
-        /*Worker[] GetWorkersBetweenTwoDates(DateTime dateFrom, DateTime dateTo)
+        public Worker[] GetWorkersBetweenTwoDates(DateTime datefrom, DateTime dateto)
         {
-             // здесь происходит чтение из файла
-             // фильтрация нужных записей
-             // и возврат массива считанных экземпляров
-        }*/
+            var sortDate = workers.OrderBy(workers=>workers.dateCreate);
+            foreach (var i in sortDate)
+            {
+                if (i.dateCreate >= datefrom & i.dateCreate <= dateto)
+                {
+                    Console.WriteLine(i.PrintEmp());
+                }
+                
+            }
+            /*for(int i = 0; i < sortDate.Length; i++)
+            {
+                Console.WriteLine(this.workers[i].PrintEmp());
+            }*/
+            /*for (int i = 0; i < index; i++)
+            {
+                if (workers[i].dateCreate >= dateFrom & workers[i].dateCreate <= dateTo)
+                {
+                    
+                }
+                Console.WriteLine(this.workers[i].PrintEmp());
+            } */
+            return workers;
+        }
         /// <summary>
         /// Проверяет наличие файла. при отсутствии файла создает его.
         /// </summary>
-        private void LoadEmp()
+        /*private void LoadEmp()
         {
             using (StreamReader sr = new StreamReader(this.pathEmp))
             {
@@ -107,8 +128,8 @@ namespace Task_7._1
                         DateOnly.Parse(args[5]), args[6]));
                 }
             }
-        }
-        void CheckFile()
+        }*/
+        private void CheckFile()
         {
             if (File.Exists(pathEmp) == false)
             {
