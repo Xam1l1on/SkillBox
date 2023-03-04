@@ -42,7 +42,12 @@ namespace Task_8._2
         }
         void GetUser(ulong id)
         {
-            foreach (var itemUser in dicUser)
+            string value = "";
+            if(dicUser.TryGetValue(id, out user))
+            {
+                Console.WriteLine("For key = \"{0}\", value = {1}.", id, value);
+            }
+            /*foreach (var itemUser in dicUser)
             {
                 if (dicUser.ContainsKey(id))
                 {
@@ -51,7 +56,7 @@ namespace Task_8._2
                 else
                 {
                     Console.WriteLine("Такого пользователя нет");
-                }
+                }*/
             }
         }
     }
