@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Label x:Name="lblName" Content="Label" HorizontalAlignment="Left" Margin="399,37,0,0" VerticalAlignment="Top" Height="41" Width="82"/>
+        <Label x:Name="lblLastname" Content="Label" HorizontalAlignment="Left" Margin="528,174,0,0" VerticalAlignment="Top" Height="43" Width="97"/>
+        <Label x:Name="lblMiddlename" Content="Label" HorizontalAlignment="Center" Margin="0,174,0,0" VerticalAlignment="Top" Height="43" Width="64"/>
+        <Label x:Name="lblPhoneNumber" Content="Label" HorizontalAlignment="Left" Margin="302,37,0,0" VerticalAlignment="Top" Height="41" Width="80"/>
+        <Label x:Name="lblPassport" Content="Label" HorizontalAlignment="Left" Margin="580,40,0,0" VerticalAlignment="Top" Height="38" Width="90"/>
+        <TextBox x:Name="txtLastName_Customer" HorizontalAlignment="Left" Margin="280,253,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnAddCustomer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="144" Height="46" Margin="55,339,0,0" Content="Добавить клиента" Panel.ZIndex="2"></Button>
     </Grid>
 </Window>

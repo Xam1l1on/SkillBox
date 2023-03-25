@@ -20,9 +20,14 @@ namespace Task_10._1
     /// </summary>
     public partial class MainWindow : Window
     {
+        Customer cust1 = new Customer();
         public MainWindow()
         {
             InitializeComponent();
+            txtLastName_Customer.Text = cust1.Name;
+            lblLastname.Content = cust1.Lastname;
+            lblMiddlename.Content = cust1.Middlename;
+            lblName.Content = cust1.Name;
         }
     }
 }
