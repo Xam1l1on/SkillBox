@@ -9,8 +9,8 @@ namespace Task_10._1
     struct Customer
     {
         #region Fields
-        string? _lastname, _name, _middlename;
-        int _phoneNumber, _passport;
+        private string? _lastname, _name, _middlename; //Фамимлия имя Отчество клиента
+        private int _phoneNumber, _passport; //Номер телефона, номер паспорта клиента
         #endregion
         #region Properties
         public string Lastname { get { return _lastname; } set { _lastname = value; } }
@@ -39,6 +39,10 @@ namespace Task_10._1
         }
         #endregion
         #region Methods
+        /// <summary>
+        /// Метод преобразующий номер телефона клиента в набор символов '************'
+        /// </summary>
+        /// <returns></returns>
         internal string MaskedPassport()
         {
             string maskedPassport = string.Empty;

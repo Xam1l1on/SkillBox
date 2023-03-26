@@ -22,7 +22,6 @@ namespace Task_9._1
     /// </summary>
     public partial class MainWindow : Window
     {
-        int i = 0;
         ObservableCollection<string> words = new ObservableCollection<string>();
         UserTextConvert userTextConvert = new UserTextConvert();
         public MainWindow()
@@ -34,7 +33,7 @@ namespace Task_9._1
         private void btnSplitText_Click(object sender, RoutedEventArgs e)
         {
             words.Clear();
-            string[] strWords = userTextConvert.UserTextSplit(txtbTextUser.Text);
+            string[] strWords = userTextConvert.UserTextSplit(txtbSplitText.Text);
             for (int i = 0; i < strWords.Length; i++)
             {
                 words.Add(strWords[i]);
@@ -43,7 +42,7 @@ namespace Task_9._1
 
         private void btnReverseText_Click(object sender, RoutedEventArgs e)
         {
-            string strWord = userTextConvert.UserTextReverse(txtbTextUser.Text);
+            string strWord = userTextConvert.UserTextReverse(txtbReverseText.Text);
             lblReverseText.Content = strWord;
         }
 
