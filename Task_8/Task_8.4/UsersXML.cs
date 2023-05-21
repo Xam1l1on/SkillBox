@@ -37,6 +37,6 @@ namespace Task_8._4
                 person.Add(FIO);
                 person.Save(fStream);
             }
-        }   
+        }
     }
 }

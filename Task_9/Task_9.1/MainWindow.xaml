@@ -6,6 +6,14 @@
 		xmlns:local="clr-namespace:Task_9._1"
 		mc:Ignorable="d"
 		Title="MainWindow" Height="400" Width="600">
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type TextBlock}" x:Key="WrappingStyle">
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -14,13 +22,13 @@
         <GridSplitter Grid.Column="0" Visibility="Visible" Width="2" ></GridSplitter>
         <DockPanel Grid.Column="0">
             <ListBox x:Name="listbSplitText" Background="AliceBlue" DockPanel.Dock="Left" MaxWidth="150" Height="Auto"/>
-            <Button x:Name="btnSplitText" Content="Разбить текст на слова " Click="btnSplitText_Click" DockPanel.Dock="Top" Width="100"/>
-            <TextBox x:Name="txtbSplitText" TextWrapping="Wrap" Text="TextBox" Background="AliceBlue" DockPanel.Dock="Top" Height="50"/>
+            <Button x:Name="btnSplitText" Content="Разбить текст на слова " Click="btnSplitText_Click" DockPanel.Dock="Bottom" Height="35" Width="150"/>
+            <TextBox x:Name="txtbSplitText" TextWrapping="Wrap" Text="TextBox" Background="AliceBlue" DockPanel.Dock="Top" VerticalAlignment="Top" Height="50"/>
         </DockPanel>
         <DockPanel Grid.Column="1">
             <Button x:Name="btnReverseText" Content="Реверс текста" DockPanel.Dock="Bottom" Height="35" Width="100" Click="btnReverseText_Click"/>
-            <TextBox x:Name="txtbReverseText" TextWrapping="Wrap" HorizontalAlignment="Center" MinHeight="50" MinWidth="100" Width="Auto" DockPanel.Dock="Top" Margin="5"></TextBox>
-            <Label x:Name="lblReverseText" DockPanel.Dock="Top" VerticalAlignment="Top" Background="AliceBlue" MinHeight="50" Margin="5">
+            <TextBox x:Name="txtbReverseText" TextWrapping="Wrap" HorizontalAlignment="Center" Background="AliceBlue" MinHeight="50" MinWidth="100" Width="Auto" DockPanel.Dock="Top" Margin="5"></TextBox>
+            <Label x:Name="lblReverseText" DockPanel.Dock="Top" VerticalAlignment="Top" Background="Wheat"  MinHeight="50" Margin="5">
                 <AccessText TextWrapping="WrapWithOverflow"></AccessText>
             </Label>
         </DockPanel>

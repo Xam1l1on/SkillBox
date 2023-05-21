@@ -20,14 +20,60 @@ namespace Task_10._1
     /// </summary>
     public partial class MainWindow : Window
     {
-        Customer cust1 = new Customer();
+        DataCustomers dataCustomers = new DataCustomers();
+        //private string _nameFileCustomers = "customers.xml";
         public MainWindow()
         {
             InitializeComponent();
-            txtLastName_Customer.Text = cust1.Name;
-            lblLastname.Content = cust1.Lastname;
-            lblMiddlename.Content = cust1.Middlename;
-            lblName.Content = cust1.Name;
+            this.DataContext = dataCustomers;
+            dataCustomers.LoadCustomer();
+            Visibility vis = new Visibility();
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+        private void btn_RemoveCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            dataCustomers.isXmlFileExist();
+            if(txt_NameCustomer.Text == null && txt_MidnameCustomer == null && txt_LasnameCustomer == null && txt_PhoneCustomer == null && txt_PassportCustomer.Text == null)
+            {
+                MessageBox.Show("Вы должны заполнить все поля!");
+            }
+            else
+            {
+                dataCustomers.AddCustomer(txt_NameCustomer.Text,txt_MidnameCustomer.Text,txt_LasnameCustomer.Text,
+                    Convert.ToInt32(txt_PhoneCustomer.Text), Convert.ToInt32(txt_PassportCustomer.Text));
+                dataCustomers.SaveCustomer();
+                lbl_Test.Content = dataCustomers.ShowCustomer();
+            }
+        }
+
+        private void btn_ChangeCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void cmb_ChangeEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.ChoiceEmployee();
+        }
+        #region Methods
+        public void ChoiceEmployee()
+        {
+            if (cmb_ChangeEmployees.Items.CurrentItem == Consultant.Content)
+            {
+                grdc_EnabledCustomer.Width = new GridLength(0, GridUnitType.Star);
+            }
+            else
+            {
+                stp_ChangeCustomer.Visibility = Visibility.Visible;
+                grdc_EnabledCustomer.Width = new GridLength(1, GridUnitType.Star);
+            }
+        }
+        #endregion
     }
 }

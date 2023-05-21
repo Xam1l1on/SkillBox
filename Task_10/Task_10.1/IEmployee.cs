@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Task_10._1
 {
-    class Employees
+    interface IEmployee
     {
-        public Employees() { }
-
+        string Name { get; set; }
+        public bool isEmployeeAccess();
     }
 }

@@ -5,14 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_10._1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Label x:Name="lblName" Content="Label" HorizontalAlignment="Left" Margin="399,37,0,0" VerticalAlignment="Top" Height="41" Width="82"/>
-        <Label x:Name="lblLastname" Content="Label" HorizontalAlignment="Left" Margin="528,174,0,0" VerticalAlignment="Top" Height="43" Width="97"/>
-        <Label x:Name="lblMiddlename" Content="Label" HorizontalAlignment="Center" Margin="0,174,0,0" VerticalAlignment="Top" Height="43" Width="64"/>
-        <Label x:Name="lblPhoneNumber" Content="Label" HorizontalAlignment="Left" Margin="302,37,0,0" VerticalAlignment="Top" Height="41" Width="80"/>
-        <Label x:Name="lblPassport" Content="Label" HorizontalAlignment="Left" Margin="580,40,0,0" VerticalAlignment="Top" Height="38" Width="90"/>
-        <TextBox x:Name="txtLastName_Customer" HorizontalAlignment="Left" Margin="280,253,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnAddCustomer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="144" Height="46" Margin="55,339,0,0" Content="Добавить клиента" Panel.ZIndex="2"></Button>
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid Name="grd_MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="50" MaxWidth="150"></ColumnDefinition>
+            <ColumnDefinition Name="grdc_EnabledCustomer" MinWidth="0"></ColumnDefinition>
+            <ColumnDefinition MinWidth="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <ComboBox Name="cmb_ChangeEmployees" HorizontalContentAlignment="Center" SelectionChanged="cmb_ChangeEmployees_SelectionChanged">
+                <ComboBoxItem Name="Manager" Content="Менеджер"></ComboBoxItem>
+                <ComboBoxItem Name="Consultant" IsSelected="True" Content="Консультант"></ComboBoxItem>
+            </ComboBox>
+            <Button Name="btn_AddCustomer" Content="Добавить клиента" Click="btn_AddCustomer_Click"></Button>
+            <Button x:Name="btn_ChangeCustomer" Content="Корректировать" Click="btn_ChangeCustomer_Click"></Button>
+            <Button Name="btn_RemoveCustomer" Content="Удалить клиента" Click="btn_RemoveCustomer_Click"></Button>
+        </StackPanel>
+        <StackPanel Name="stp_ChangeCustomer" Orientation="Vertical" MinWidth="100" MaxWidth ="250" Grid.Column="1">
+            <TextBox Name="txt_NameCustomer" Padding="5" IsEnabled="False"></TextBox>
+            <TextBox Name="txt_MidnameCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_LasnameCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_PhoneCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_PassportCustomer" Padding="5"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <Label Name="lbl_Test" Content="Label"/>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Clients}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Surname}" FontWeight="Bold" Margin="0,5"/>
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Patronymic}"/>
+                        <TextBlock Text="{Binding PhoneNumber}"/>
+                        <TextBlock Text="{Binding PassportSeries}" Margin="0,5"/>
+                        <TextBlock Text="{Binding PassportNumber}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

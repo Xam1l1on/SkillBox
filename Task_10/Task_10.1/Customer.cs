@@ -6,30 +6,31 @@ using System.Threading.Tasks;
 
 namespace Task_10._1
 {
-    struct Customer
+    internal class Customer
     {
         #region Fields
-        private string? _lastname, _name, _middlename; //Фамимлия имя Отчество клиента
-        private int _phoneNumber, _passport; //Номер телефона, номер паспорта клиента
+        private string _lastname, _name, _middlename; //Фамимлия имя Отчество клиента
+        private uint? _phoneNumber; //Номер телефона
+        private uint _passport; //Номер паспорта клиента
         #endregion
         #region Properties
+        public int ID { get; set; }
         public string Lastname { get { return _lastname; } set { _lastname = value; } }
         public string Name { get { return _name; } set { _name = value; } }
         public string Middlename { get { return _middlename; } set { _middlename = value; } }
-        public int PhoneNumber { get { return _phoneNumber; } set { _phoneNumber = value; } }
-        public int Passport { get { return _passport; } set { _passport = value; } }
+        public uint? PhoneNumber
+        {
+            get { return _phoneNumber; }
+            set { _phoneNumber = value ?? throw new ArgumentNullException(nameof(value)); }
+        }
+        public uint Passport
+        {
+            get { return isEmployeeAccess() ? _passport : 0; }
+            set { if (isEmployeeAccess()) { _passport = value; } }
+        }
         #endregion
         #region Constructor
-        public Customer() : this ("","","",0) { }
-        public Customer(string lastname,string name, string middlename, int phoneNumber) 
-            : this (lastname, name,middlename, phoneNumber,0)
-        {
-            _lastname = lastname;
-            _name = name;
-            _middlename = middlename;
-            _phoneNumber = phoneNumber;
-        }
-        public Customer(string lastname, string name, string middlename, int phoneNumber, int passport)
+        public Customer(string lastname, string name, string middlename, uint? phoneNumber, uint passport)
         {
             _lastname = lastname;
             _name = name;
@@ -53,6 +54,7 @@ namespace Task_10._1
             }
             return maskedPassport;
         }
+        public bool isEmployeeAccess() => false;
         #endregion
     }
 }
