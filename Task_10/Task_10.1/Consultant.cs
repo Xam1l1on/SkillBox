@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Task_10._1
 {
-    class Consultant : IEmployee
+    class Consultant
     {
-        #region Реализация интерфейса IEmployee
-        public string Name { get; set; }
-        public bool isEmployeeAccess() => false;
-        #endregion
 
     }
 }

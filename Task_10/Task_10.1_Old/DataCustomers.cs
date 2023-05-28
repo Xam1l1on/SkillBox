@@ -9,26 +9,29 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Data;
 using System.Collections.ObjectModel;
+using System.Reflection.PortableExecutable;
 
 namespace Task_10._1
 {
     internal class DataCustomers
     {
         Customer customer;
-        private readonly string _pathToFileCustomers = "";
         ObservableCollection<Customer> customers;
         private string _nameFileCustomers = "customers.xml";
         public string NameFileCustomers { get { return _nameFileCustomers;}  set { _nameFileCustomers = value; } }
-        private string _nameFileCustomers2 = "customers2.xml";
-        public string NameFileCustomers2 { get { return _nameFileCustomers2; } set { _nameFileCustomers2 = value; } }
         public DataCustomers() 
         {
+            LoadCustomer();
             customers = new ObservableCollection<Customer>();
         }
-        public string ShowCustomer() 
+        public string ShowCustomerName() 
         { 
             return customer.Name;
         }
+        public int CustID { get { return customer.ID; } }
+        public string CustName { get {  return customer.Name; } }
+        public string CustMidname { get { return customer.Middlename; } }
+        public string CustLastname { get { return customer.Lastname; } }
 
         public bool isXmlFileExist()
         {
@@ -41,42 +44,60 @@ namespace Task_10._1
         }
         public void LoadCustomer()
         {
-            XmlReader xmlReader = XmlReader.Create(NameFileCustomers);
-            while(xmlReader.Read())
+            using (XmlReader xmlReader = XmlReader.Create(NameFileCustomers))
             {
-                customer = new Customer();
-                if(xmlReader.IsStartElement())
+                while (xmlReader.Read())
                 {
-                    xmlReader.ReadToFollowing("Name");
-                    customer.Name = xmlReader.ReadElementContentAsString();
-                    xmlReader.ReadToFollowing("Middlename");
-                    customer.Middlename = xmlReader.ReadElementContentAsString();
-                    xmlReader.ReadToFollowing("LastName");
-                    customer = new Customer(xmlReader.ReadToFollowing("Name"), xmlReader.ReadToFollowing("Middlename"));
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Customer")
+                    {
+                        // Create a new Customer object.
+                        customer = new Customer();
+
+                        // Get the ID attribute value and assign it to the Customer object.
+                        if (xmlReader.HasAttributes)
+                        {
+                            while (xmlReader.MoveToNextAttribute())
+                            {
+                                if (xmlReader.Name == "ID")
+                                {
+                                    customer.ID = int.Parse(xmlReader.Value);
+                                }
+                            }
+                        }
+                    }
+                    // Check if the current node is a Name, Middlename, or Lastname element inside the FullName element.
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Name" && xmlReader.Read())
+                    {
+                        customer.Name = xmlReader.Value;
+                    }
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Middlename" && xmlReader.Read())
+                    {
+                        customer.Middlename = xmlReader.Value;
+                    }
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Lastname" && xmlReader.Read())
+                    {
+                        customer.Lastname = xmlReader.Value;
+                    }
+                    // Check if the current node is a PhoneNumber or Passport element inside the Data element.
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "PhoneNumber" && xmlReader.Read())
+                    {
+                        customer.PhoneNumber = ulong.Parse(xmlReader.Value);
+                    }
+                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "Passport" && xmlReader.Read())
+                    {
+                        customer.Passport = int.Parse(xmlReader.Value);
+                    }
+                    // Check if the current node is an end element for a Customer element.
+                    if (xmlReader.NodeType == XmlNodeType.EndElement && xmlReader.Name == "Customer")
+                    {
+                        // Add the Customer object to the list of customers.
+                        customers.Add(customer);
+                    }
                 }
             }
-            XmlDocument readDoc = new XmlDocument();
-            readDoc.Load("customers.xml");
-
-            foreach (XmlNode node in readDoc.DocumentElement.ChildNodes)
-            {
-                string id = node.Attributes["ID"].Value;
-                Console.WriteLine("Customer ID: " + id);
-
-                XmlNode fullNameNode = node.SelectSingleNode("FullName");
-                string name = fullNameNode.SelectSingleNode("Name").InnerText;
-                string middle = fullNameNode.SelectSingleNode("MiddleName").InnerText;
-                string last = fullNameNode.SelectSingleNode("LastName").InnerText;
-                Console.WriteLine("Name: " + name + " " + middle + " " + last);
-
-                XmlNode dataNode = node.SelectSingleNode("Data");
-                string phone = dataNode.SelectSingleNode("PhoneNumber").InnerText;
-                string passportNumber = dataNode.SelectSingleNode("Passport").InnerText;
-                Console.WriteLine("Phone Number: " + phone);
-                Console.WriteLine("Passport Number: " + passportNumber);
-            }
         }
-        public void AddCustomer(string name, string midname, string lastname, int phone, int passport)
+        //Add customer to List
+        public void AddCustomer(string name, string midname, string lastname, uint phone, int passport)
         {
             customer = new Customer();
             customer.Name = name;
@@ -93,8 +114,10 @@ namespace Task_10._1
             XmlDeclaration declaration = doc.CreateXmlDeclaration("1.0", "UTF-8", null);
             doc.AppendChild(declaration);
             //Create Root baranch cutomers
-            XmlNode customers = doc.CreateElement("Customer");
+            XmlNode customers = doc.CreateElement("Customers");
             doc.AppendChild(customers);
+            XmlNode cust = doc.CreateElement("Customer");
+            customers.AppendChild(cust);
             XmlAttribute customersAtt = doc.CreateAttribute("ID");
             customers.Attributes?.Append(customersAtt);
             XmlNode customerFIO = doc.CreateElement("FullName");
@@ -127,7 +150,6 @@ namespace Task_10._1
             XmlWriter xmlWriter = XmlWriter.Create(NameFileCustomers, settings);
             doc.Save(xmlWriter);
             xmlWriter.Close();
-
         }
     }
 }

@@ -1,0 +1,53 @@
+﻿<Window x:Class="Task_10._1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task_10._1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid Name="grd_MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="50" MaxWidth="150"></ColumnDefinition>
+            <ColumnDefinition Name="grdc_EnabledCustomer" MinWidth="0"></ColumnDefinition>
+            <ColumnDefinition MinWidth="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <ComboBox Name="cmb_ChangeEmployees" HorizontalContentAlignment="Center" SelectionChanged="cmb_ChangeEmployees_SelectionChanged">
+                <ComboBoxItem Name="Manager" Content="Менеджер"></ComboBoxItem>
+                <ComboBoxItem Name="Consultant" IsSelected="True" Content="Консультант"></ComboBoxItem>
+            </ComboBox>
+            <Button Name="btn_AddCustomer" Content="Добавить клиента" Click="btn_AddCustomer_Click"></Button>
+            <Button x:Name="btn_ChangeCustomer" Content="Корректировать" Click="btn_ChangeCustomer_Click"></Button>
+            <Button Name="btn_RemoveCustomer" Content="Удалить клиента" Click="btn_RemoveCustomer_Click"></Button>
+        </StackPanel>
+        <StackPanel Name="stp_ChangeCustomer" Orientation="Vertical" MinWidth="100" MaxWidth ="250" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Name="lbl_NumCustomer" Content="Номер клиента" Grid.Column="1" MinWidth="100" Padding="5"></Label>
+                <TextBox x:Name="txt_NumCustomer" TextChanged="txt_NumCustomer_TextChanged"></TextBox>
+            </StackPanel>
+            <TextBox Name="txt_NameCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_MidnameCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_LasnameCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_PhoneCustomer" Padding="5"></TextBox>
+            <TextBox Name="txt_PassportCustomer" Padding="5"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <Label Name="lbl_Test" Content="Label"/>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Clients}" Grid.Column="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock Text="{Binding Surname}" FontWeight="Bold" Margin="0,5"/>
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Patronymic}"/>
+                        <TextBlock Text="{Binding PhoneNumber}"/>
+                        <TextBlock Text="{Binding PassportSeries}" Margin="0,5"/>
+                        <TextBlock Text="{Binding PassportNumber}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
