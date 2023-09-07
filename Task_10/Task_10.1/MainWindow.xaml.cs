@@ -20,9 +20,32 @@ namespace Task_10._1
     /// </summary>
     public partial class MainWindow : Window
     {
+        CustomerData customerData = new CustomerData();
+        private string fileNameCustomers = "customers.xml";
         public MainWindow()
         {
             InitializeComponent();
+            customerData.LoadCustomersFromXML(fileNameCustomers);
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            customerData.AddXMLFileCustomers(fileNameCustomers);
+        }
+
+        private void btnChange_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -5,29 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_10._1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="300" Width="500">
+    <Window.Resources>
+        <Style x:Key="TitleText" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="200"/>
+        </Style>
+        <Style x:Key="lblInfo" TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="80"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="Margin" Value="0,5,5,0"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="29"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <ComboBox Grid.Column="0" Grid.Row="0">
             <ComboBoxItem IsSelected="True">Консультант</ComboBoxItem>
         </ComboBox>
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
-            <Button Name="btnAdd" Content="Add" Margin="2"></Button>
-            <Button Name="btnChange" Content="Change" Margin="2"></Button>
-            <Button Name="btnRemove" Content="Remove" Margin="2"></Button>
-            <TextBox Margin="5" Text="sssss"></TextBox>
-            <Button x:Name="btnSearch" Content="Search"></Button>
+            <Button Name="btnAdd" Content="Add" Margin="2" Click="btnAdd_Click" Width="48"></Button>
+            <Button Name="btnChange" Content="Change" Margin="2" Click="btnChange_Click"></Button>
+            <Button Name="btnRemove" Content="Remove" Margin="2" Click="btnRemove_Click"></Button>
+            <TextBox Margin="5" Text="1" Width="25"></TextBox>
+            <Button x:Name="btnSearch" Content="Search" Click="btnSearch_Click"></Button>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
-            
-        </StackPanel>
+        <WrapPanel Margin="5,5,5,5" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Height="250" Width="338">
+            <Label Style="{StaticResource lblInfo}" x:Name="lblName" Content="Имя" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox Style="{StaticResource TitleText}" x:Name="txtName" VerticalAlignment="Center" Height="{Binding ActualHeight, ElementName=lblName, Mode=OneWay}"/>
+            <Label Style="{StaticResource lblInfo}" x:Name="lblMidname" Content="Отчество" Width="70" Height="30"/>
+            <TextBox Style="{StaticResource TitleText}" x:Name="txtMidname" Height="{Binding ActualHeight, ElementName=lblMidname, Mode=OneWay}" />
+            <Label Style="{StaticResource lblInfo}" x:Name="lblLastname" Content="Фамилия" Width="70" Height="30"/>
+            <TextBox Style="{StaticResource TitleText}" x:Name="txtLastname" Height="{Binding ActualHeight, ElementName=lblLastname, Mode=OneWay}"/>
+            <Label Style="{StaticResource lblInfo}" x:Name="lblPhone" Content="Телефон" Width="70" Height="30"/>
+            <TextBox Style="{StaticResource TitleText}" x:Name="txtPhone" Height="{Binding ActualHeight, ElementName=lblPhone, Mode=OneWay}"/>
+            <Label Style="{StaticResource lblInfo}" x:Name="lblPassport" Content="Паспорт" Width="70" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox Style="{StaticResource TitleText}" x:Name="txtPassport" Height="{Binding ActualHeight, ElementName=lblPassport, Mode=OneWay}" HorizontalAlignment="Center"/>
+        </WrapPanel>
     </Grid>
 </Window>
